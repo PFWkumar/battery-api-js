@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Battery API Demo</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/ipad-mockup.css">
+
+</head>
+
+<body>
+    
+
+
+   <div class="demo">
+
+        <div class="desktop-version ios-device ios-device--large ios-device--white ipad ipad-air-2 ipad-air-2--large">
+            <div class="ios-device__screen">
+
+                <!-- Our App, positioned in the screen of the mockup.  -->
+                <!-- Receives battery from the global Vue instance. -->
+                <app :battery-level="batteryLevel"></app>
+
+            </div>
+        </div>
+
+        <div class="controls">
+            
+            <!-- Receives value from the global Vue instance. Turns red when low. -->         
+            <div class="battery" >
+                <div class="charge" v-bind:class="{ 'low': batteryLevel <= 30 }" style="height: {{batteryLevel}}%;"></div>
+                <span>{{batteryLevel}}</span>
+            </div>
+
+            <div>
+                <p>Control how much battery the virtual device has:</p>
+
+                <!-- Toggle buttons for draning and recharging. -->
+                <a href="#" @click.prevent="drainBattery" v-if="batteryLevel > 30" >Drain Battery</a>
+                <a href="#" @click.prevent="rechargeBattery" v-else >Recharge Battery</a>
+            </div>
+            
+        </div>
+
+        <!-- A version of the app without the mockup, for mobile devices. -->
+        <app class="mobile-version" :battery-level="batteryLevel"></app>
+
+    </div>
+
+
+
+
+    <!-- Template for the battery adaptive app. -->
+    <template id="app">
+
+        <!-- Theme will be resolved to light-theme or dark-theme. -->
+        <div class="app {{ theme }}">
+
+            <!-- Canvas for animations, shown only when not in powerSavingMode. -->
+            <canvas v-show="!powerSavingMode" class="gradient"></canvas>  
+
+            <div class="content">
+
+                <header>
+                    <h1>Demo</h1>
+                    <h3 v-if="powerSavingMode">Powersaving is ON</h3>
+                    <h3 v-else>Powersaving is OFF</h3>
+                </header>
+
+                <div class="container">
+                    
+                    <p>Lorem ipsum dolor sit amet, consectetur, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+
+                    <!-- Placeholder advertisement, hidden when in powerSavingMode. -->
+                    <div class="ad" v-if="!powerSavingMode">Advert</div>
+
+                    <p>Lorem ipsum dolor sit amet, ut et consectetur adipisicing elit, tempor incididunt ut labore.</p>
+
+                    <a class="btn" href="#" @click.prevent >Action Button</a>
+                </div>
+            </div>
+
+        </div>
+
+    </template>
+
+
+    <script src="assets/js/vue.min.js"></script>
+
+    <!-- Background animation -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="assets/js/background.js"></script>
+
+	<script src="assets/js/demo.js"></script>
+
+
+    <!-- Only used for the demos. Please ignore and remove. -->
+    <script src="http://cdn.tutorialzine.com/misc/enhance/v3.js" async></script>
+
+</body>
+
+</html>
